@@ -30,6 +30,9 @@
 
 	$effect(() => {
 		document.documentElement.style.overflow = open ? 'hidden' : '';
+		// Keep keyboard and screen-reader focus inside the menu while it covers the page.
+		const behind = document.querySelectorAll('#contenuto, #contenuto ~ footer');
+		behind.forEach((el) => el.toggleAttribute('inert', open));
 		if (!open) return;
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
@@ -37,8 +40,17 @@
 				toggle?.focus();
 			}
 		};
+		// The drawer only exists below the desktop breakpoint, so close it when crossing it.
+		const desktop = matchMedia('(min-width: 901px)');
+		const onResize = () => desktop.matches && (open = false);
 		window.addEventListener('keydown', onKey);
-		return () => window.removeEventListener('keydown', onKey);
+		desktop.addEventListener('change', onResize);
+		return () => {
+			window.removeEventListener('keydown', onKey);
+			desktop.removeEventListener('change', onResize);
+			document.documentElement.style.overflow = '';
+			behind.forEach((el) => el.removeAttribute('inert'));
+		};
 	});
 </script>
 
@@ -76,25 +88,27 @@
 			<span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
 		</button>
 	</div>
-
-	<div id="menu-mobile" class="drawer" hidden={!open}>
-		<nav aria-label="Menu mobile">
-			<ul>
-				{#each links as link, i (link.href)}
-					<li style:--i={i}>
-						<a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
-							{link.label}
-							<Icon name="arrow" />
-						</a>
-					</li>
-				{/each}
-			</ul>
-			<a class="btn drawer-cta" href="/itinerari" {...trackAttrs(EVENTS.cta, { posizione: 'menu-mobile' })}>
-				Scopri gli itinerari gratuiti
-			</a>
-		</nav>
-	</div>
 </header>
+
+<!-- Kept outside <header>: its backdrop-filter would become the containing block of this
+     fixed drawer and squash it to zero height on mobile browsers. -->
+<div id="menu-mobile" class="drawer" hidden={!open}>
+	<nav aria-label="Menu mobile">
+		<ul>
+			{#each links as link, i (link.href)}
+				<li style:--i={i}>
+					<a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>
+						{link.label}
+						<Icon name="arrow" />
+					</a>
+				</li>
+			{/each}
+		</ul>
+		<a class="btn drawer-cta" href="/itinerari" {...trackAttrs(EVENTS.cta, { posizione: 'menu-mobile' })}>
+			Scopri gli itinerari gratuiti
+		</a>
+	</nav>
+</div>
 
 <style>
 	.skip {
@@ -242,8 +256,10 @@
 	.drawer {
 		position: fixed;
 		inset: var(--header-h) 0 0;
+		z-index: 49;
 		background: var(--bg);
 		overflow-y: auto;
+		overscroll-behavior: contain;
 		padding: 1.5rem var(--gutter) calc(2rem + env(safe-area-inset-bottom));
 	}
 
@@ -282,6 +298,12 @@
 		from {
 			opacity: 0;
 			transform: translateY(14px);
+		}
+	}
+
+	@media (min-width: 901px) {
+		.drawer {
+			display: none;
 		}
 	}
 
