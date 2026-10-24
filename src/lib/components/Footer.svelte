@@ -2,7 +2,7 @@
 	import Logo from './Logo.svelte';
 	import Socials from './Socials.svelte';
 	import { site } from '#lib/config.ts';
-	import { itineraries, REGIONS } from '#lib/data/itineraries.ts';
+	import { REGIONS } from '#lib/data/itineraries.ts';
 </script>
 
 <footer class="footer">
@@ -19,15 +19,6 @@
 				</p>
 				<Socials />
 			</div>
-
-			<nav aria-label="Itinerari">
-				<h2>Itinerari</h2>
-				<ul>
-					{#each itineraries as it (it.slug)}
-						<li><a href={`/itinerari/${it.slug}`}>{it.title}</a></li>
-					{/each}
-				</ul>
-			</nav>
 
 			<nav aria-label="Destinazioni">
 				<h2>Destinazioni</h2>
@@ -76,7 +67,7 @@
 
 	.top {
 		display: grid;
-		grid-template-columns: 1.6fr repeat(3, 1fr);
+		grid-template-columns: 1.6fr repeat(2, 1fr);
 		gap: 2.5rem;
 	}
 
