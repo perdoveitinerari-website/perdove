@@ -15,7 +15,6 @@ declare global {
 export const EVENTS = {
 	pdfDownload: 'pdf-download',
 	pdfView: 'pdf-view',
-	map: 'mappa-interattiva',
 	filter: 'filtro-regione',
 	social: 'social',
 	cta: 'cta',

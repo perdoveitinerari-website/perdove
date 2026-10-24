@@ -36,7 +36,7 @@
 		},
 		{
 			q: 'Cosa comprende il budget indicativo?',
-			a: 'Ogni itinerario riporta una stima delle spese giornaliere a persona su tre fasce (economica, media e alta) e una stima del costo dei biglietti delle attrazioni incluse. Cosa è compreso nella stima è spiegato nella sezione budget di ciascun itinerario.'
+			a: 'Ogni itinerario riporta una stima delle spese giornaliere a persona su tre fasce (economica, media e alta) e una stima del costo dei biglietti delle attrazioni incluse. Cosa è compreso nella stima è spiegato nella sezione budget di ciascun PDF.'
 		},
 		{
 			q: 'Posso stampare o condividere un itinerario?',

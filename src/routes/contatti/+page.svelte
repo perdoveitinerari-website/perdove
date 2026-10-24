@@ -18,7 +18,7 @@
 	lead="Hai una domanda su un itinerario, vuoi suggerirci una destinazione o hai notato un’informazione da aggiornare? Siamo qui."
 />
 
-<section class="contact" aria-label="Modulo e recapiti">
+<section class="contact" id="modulo" aria-label="Modulo e recapiti">
 	<div class="container grid">
 		<div class="card form-card">
 			<h2 class="visually-hidden">Modulo di contatto</h2>

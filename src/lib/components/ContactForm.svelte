@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Icon from './Icon.svelte';
 	import { FORMSPREE_FORM_ID, site } from '#lib/config.ts';
 	import { track, EVENTS } from '#lib/analytics.ts';
@@ -6,8 +7,13 @@
 	type Status = 'idle' | 'sending' | 'success' | 'error';
 	type Field = 'nome' | 'email' | 'messaggio' | 'privacy';
 
+	const CUSTOM_SUBJECT = 'Itinerario personalizzato';
+	const CUSTOM_TEMPLATE =
+		'Ciao! Vorrei un itinerario personalizzato.\n\nDestinazione: \nDate o durata del viaggio: \nNumero di persone: \nInteressi e budget: ';
+
 	const subjects = [
 		'Informazioni su un itinerario',
+		CUSTOM_SUBJECT,
 		'Suggerisci una destinazione',
 		'Segnala un errore o un aggiornamento',
 		'Collaborazioni',
@@ -21,6 +27,13 @@
 	let form: HTMLFormElement | undefined = $state();
 	let resultBox: HTMLElement | undefined = $state();
 	const renderedAt = Date.now();
+
+	// /contatti?argomento=personalizzato (the homepage button) preselects the topic and a message outline.
+	onMount(() => {
+		if (new URLSearchParams(location.search).get('argomento') !== 'personalizzato') return;
+		values.oggetto = CUSTOM_SUBJECT;
+		if (!values.messaggio) values.messaggio = CUSTOM_TEMPLATE;
+	});
 
 	const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 

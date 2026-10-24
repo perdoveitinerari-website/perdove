@@ -69,6 +69,14 @@
 				Scopri gli itinerari
 				<Icon name="arrow" />
 			</a>
+			<a
+				class="btn btn-outline"
+				href="/contatti?argomento=personalizzato#modulo"
+				{...trackAttrs(EVENTS.cta, { posizione: 'hero-personalizzato' })}
+			>
+				<Icon name="compass" />
+				Itinerario personalizzato
+			</a>
 			<a class="btn btn-outline" href="#come-funziona">Come funziona</a>
 		</div>
 		<ul class="trust hero-in" style:--d="360ms">
