@@ -301,6 +301,8 @@ select {
 .form .field {
 	display: grid;
 	gap: 0.4rem;
+	/* Keep side-by-side fields aligned when only one of them shows an error line. */
+	align-content: start;
 }
 
 .form label {
