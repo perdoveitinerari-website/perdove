@@ -18,10 +18,14 @@ export const site = {
 } as const;
 
 /**
- * Formspree (https://formspree.io): create a form and paste its ID (the part after /f/).
- * While empty, the contact form shows a fallback with the e-mail address.
+ * Formspree (https://formspree.io): one form per website form, so their submissions, e-mails and
+ * settings stay separate. Paste each ID (the part after /f/). While empty, that form shows a
+ * fallback with the e-mail address.
  */
-export const FORMSPREE_FORM_ID = 'xrppezzb';
+export const FORMSPREE = {
+	contact: 'xrppezzb', // "perdove - contact us"
+	feedback: 'mvkkqypb' // "perdove - feedback"
+} as const;
 
 /**
  * Umami analytics (https://umami.is, cookieless and GDPR-friendly, no consent banner needed).

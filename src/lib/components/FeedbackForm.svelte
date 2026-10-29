@@ -2,7 +2,7 @@
 	import { onMount, tick } from 'svelte';
 	import Icon from './Icon.svelte';
 	import StarRating, { MOODS } from './StarRating.svelte';
-	import { FORMSPREE_FORM_ID, site } from '#lib/config.ts';
+	import { FORMSPREE, site } from '#lib/config.ts';
 	import { track, EVENTS } from '#lib/analytics.ts';
 	import { itineraries } from '#lib/data/itineraries.ts';
 
@@ -72,7 +72,7 @@
 			return;
 		}
 
-		if (!FORMSPREE_FORM_ID) {
+		if (!FORMSPREE.feedback) {
 			status = 'error';
 			errorMessage = 'Il modulo per i feedback non è ancora attivo.';
 			return;
@@ -82,7 +82,7 @@
 		confettiModule ??= import('#lib/confetti.ts');
 		const itinerario = labelOf(values.itinerario);
 		try {
-			const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+			const res = await fetch(`https://formspree.io/f/${FORMSPREE.feedback}`, {
 				method: 'POST',
 				headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 				body: JSON.stringify({

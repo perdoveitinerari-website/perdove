@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Icon from './Icon.svelte';
-	import { FORMSPREE_FORM_ID, site } from '#lib/config.ts';
+	import { FORMSPREE, site } from '#lib/config.ts';
 	import { track, EVENTS } from '#lib/analytics.ts';
 
 	type Status = 'idle' | 'sending' | 'success' | 'error';
@@ -70,7 +70,7 @@
 			return;
 		}
 
-		if (!FORMSPREE_FORM_ID) {
+		if (!FORMSPREE.contact) {
 			status = 'error';
 			errorMessage = 'Il modulo di contatto non è ancora attivo.';
 			return;
@@ -78,7 +78,7 @@
 
 		status = 'sending';
 		try {
-			const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+			const res = await fetch(`https://formspree.io/f/${FORMSPREE.contact}`, {
 				method: 'POST',
 				headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 				body: JSON.stringify({
