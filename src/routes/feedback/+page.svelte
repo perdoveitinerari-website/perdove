@@ -35,7 +35,7 @@
 				<span class="info-icon"><Icon name="clock" size={22} /></span>
 				<div>
 					<h2>Bastano due minuti</h2>
-					<p>Un voto e qualche riga sono più che sufficienti. Nome ed e-mail sono facoltativi.</p>
+					<p>Ti chiediamo solo il nome, un voto e qualche riga. L’e-mail è facoltativa.</p>
 				</div>
 			</div>
 			<div class="info-block">

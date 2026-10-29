@@ -7,7 +7,7 @@
 	import { itineraries } from '#lib/data/itineraries.ts';
 
 	type Status = 'idle' | 'sending' | 'success' | 'error';
-	type Field = 'email' | 'voto' | 'commento' | 'privacy';
+	type Field = 'nome' | 'email' | 'voto' | 'commento' | 'privacy';
 
 	const GENERAL = 'generale';
 	const options = [
@@ -19,7 +19,7 @@
 	const blank = () => ({ nome: '', email: '', itinerario: GENERAL, voto: 0, commento: '', privacy: false, _gotcha: '' });
 
 	let values = $state(blank());
-	let touched = $state<Record<Field, boolean>>({ email: false, voto: false, commento: false, privacy: false });
+	let touched = $state<Record<Field, boolean>>({ nome: false, email: false, voto: false, commento: false, privacy: false });
 	let status = $state<Status>('idle');
 	let errorMessage = $state('');
 	let form: HTMLFormElement | undefined = $state();
@@ -36,6 +36,7 @@
 	const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 	const errors = $derived<Record<Field, string>>({
+		nome: values.nome.trim().length < 2 ? 'Inserisci il tuo nome.' : '',
 		// E-mail is optional: only check it when something was typed.
 		email:
 			values.email.trim() && !EMAIL_RE.test(values.email.trim())
@@ -58,7 +59,7 @@
 
 	async function onsubmit(event: SubmitEvent) {
 		event.preventDefault();
-		touched = { email: true, voto: true, commento: true, privacy: true };
+		touched = { nome: true, email: true, voto: true, commento: true, privacy: true };
 		const firstInvalid = (Object.keys(errors) as Field[]).find((f) => errors[f]);
 		if (firstInvalid) {
 			form?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
@@ -86,7 +87,7 @@
 				headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					tipo: 'Feedback',
-					nome: values.nome.trim() || 'Anonimo',
+					nome: values.nome.trim(),
 					email: values.email.trim() || 'Non indicata',
 					...(values.email.trim() && { _replyto: values.email.trim() }),
 					_subject: `[PerDove] Feedback ${'★'.repeat(values.voto)}${'☆'.repeat(5 - values.voto)} · ${itinerario}`,
@@ -119,7 +120,7 @@
 
 	function reset() {
 		values = { ...blank(), itinerario: values.itinerario };
-		touched = { email: false, voto: false, commento: false, privacy: false };
+		touched = { nome: false, email: false, voto: false, commento: false, privacy: false };
 		renderedAt = Date.now();
 		status = 'idle';
 	}
@@ -169,9 +170,21 @@
 		{/if}
 
 		<div class="row">
-			<div class="field">
-				<label for="fb-nome">Nome <span class="optional">(facoltativo)</span></label>
-				<input id="fb-nome" name="nome" type="text" autocomplete="given-name" maxlength="80" bind:value={values.nome} />
+			<div class="field" class:invalid={show('nome')}>
+				<label for="fb-nome">Nome <span aria-hidden="true">*</span></label>
+				<input
+					id="fb-nome"
+					name="nome"
+					type="text"
+					autocomplete="given-name"
+					required
+					maxlength="80"
+					bind:value={values.nome}
+					onblur={() => (touched.nome = true)}
+					aria-invalid={show('nome') ? 'true' : undefined}
+					aria-describedby={show('nome') ? 'fb-nome-err' : undefined}
+				/>
+				{#if show('nome')}<p class="err" id="fb-nome-err">{errors.nome}</p>{/if}
 			</div>
 
 			<div class="field">
