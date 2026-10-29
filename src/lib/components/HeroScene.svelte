@@ -15,7 +15,7 @@
 		const media = window.matchMedia('(prefers-reduced-motion: reduce)');
 		const apply = () => {
 			if (media.matches) {
-				svg!.setCurrentTime(7.2); // freeze on a nice mid-climb frame
+				svg!.setCurrentTime(6); // freeze on a nice early-climb frame
 				svg!.pauseAnimations();
 			} else {
 				svg!.unpauseAnimations();
@@ -153,15 +153,17 @@
 	<path d="M0 500c300-12 700-10 1440 0v60H0z" fill="#E0B99D" opacity="0.6" />
 
 	<!-- Trail (only visible once airborne) -->
-	<g clip-path="url(#airborne)" mask="url(#trail-mask)">
-		<path
-			d={FLIGHT}
-			fill="none"
-			stroke="#C98A6B"
-			stroke-width="3"
-			stroke-linecap="round"
-			stroke-dasharray="2 12"
-		/>
+	<g clip-path="url(#airborne)">
+		<g mask="url(#trail-mask)">
+			<path
+				d={FLIGHT}
+				fill="none"
+				stroke="#C98A6B"
+				stroke-width="3"
+				stroke-linecap="round"
+				stroke-dasharray="2 12"
+			/>
+		</g>
 	</g>
 
 	<!-- Plane (drawn pointing right, centred on 0,0) -->

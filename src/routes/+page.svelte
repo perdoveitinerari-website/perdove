@@ -77,12 +77,12 @@
 				<Icon name="compass" />
 				Itinerario personalizzato
 			</a>
-			<a class="btn btn-outline" href="#come-funziona">Come funziona</a>
+			<a class="link-arrow how-link" href="#come-funziona">Come funziona <Icon name="arrow" /></a>
 		</div>
-		<ul class="trust hero-in" style:--d="360ms">
-			<li><Icon name="check" size={18} />100% gratuiti</li>
-			<li><Icon name="check" size={18} />Nessuna registrazione</li>
-			<li><Icon name="check" size={18} />PDF da portare con te</li>
+		<ul class="trust hero-in" style:--d="400ms">
+			<li><span class="tick"><Icon name="check" size={14} /></span>100% gratuiti</li>
+			<li><span class="tick"><Icon name="check" size={14} /></span>Nessuna registrazione</li>
+			<li><span class="tick"><Icon name="check" size={14} /></span>PDF da portare con te</li>
 		</ul>
 	</div>
 	<div class="scene-wrap">
@@ -230,7 +230,7 @@
 		flex-direction: column;
 		min-height: calc(100svh - var(--header-h));
 		margin-top: calc(-1 * var(--header-h));
-		padding-top: calc(var(--header-h) + clamp(2rem, 7vh, 5rem));
+		padding-top: calc(var(--header-h) + clamp(1.75rem, 7vh, 5rem));
 		overflow: hidden;
 		isolation: isolate;
 	}
@@ -240,24 +240,32 @@
 		inset: 0;
 		z-index: -2;
 		background:
-			radial-gradient(1200px 500px at 80% 0%, rgb(255 255 255 / 0.7), transparent 60%),
-			linear-gradient(180deg, #dcebf3 0%, #ebf2f5 45%, #f6f0ea 100%);
+			radial-gradient(900px 520px at 12% 30%, rgb(255 255 255 / 0.85), transparent 65%),
+			linear-gradient(180deg, #d9e8f1 0%, #e9f1f5 50%, #f6efe8 100%);
 	}
 
+	/* A soft low sun: a glow with no hard edge, so it reads as light rather than a shape */
 	.sun {
 		position: absolute;
-		top: 12%;
-		right: 12%;
-		width: clamp(120px, 16vw, 220px);
+		top: 16%;
+		right: 10%;
+		width: clamp(220px, 24vw, 380px);
 		aspect-ratio: 1;
 		border-radius: 50%;
-		background: radial-gradient(circle at 40% 40%, #f8e3d2, #ebcdb7 60%, rgb(235 205 183 / 0) 72%);
-		animation: sun 8s ease-in-out infinite alternate;
+		background: radial-gradient(
+			circle,
+			#f8e2d1 0%,
+			#f1d1ba 34%,
+			rgb(235 205 183 / 0.45) 42%,
+			rgb(235 205 183 / 0.12) 54%,
+			rgb(235 205 183 / 0) 70%
+		);
+		animation: sun 10s ease-in-out infinite alternate;
 	}
 
 	@keyframes sun {
 		to {
-			transform: translateY(12px) scale(1.04);
+			transform: translateY(10px) scale(1.03);
 		}
 	}
 
@@ -267,65 +275,86 @@
 	}
 
 	.hero h1 {
-		max-width: 13ch;
-		font-size: clamp(2.6rem, 1.6rem + 4.6vw, 5.4rem);
-		font-weight: 520;
-		letter-spacing: -0.03em;
+		max-width: 12ch;
+		font-size: clamp(2.7rem, 1.5rem + 4.6vw, 5.6rem);
+		font-weight: 470;
+		line-height: 1.02;
+		letter-spacing: -0.035em;
 		margin-bottom: 1.25rem;
 	}
 
 	.hero h1 em {
 		font-style: italic;
-		font-weight: 420;
+		font-weight: 380;
 		color: var(--clay-ink);
 	}
 
 	.hero .lead {
-		max-width: 46ch;
+		max-width: 44ch;
 		margin-bottom: 2rem;
+		color: var(--espresso-2);
+	}
+
+	.how-link {
+		margin-left: 0.6rem;
+		color: var(--espresso);
 	}
 
 	.trust {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem 1.4rem;
+		gap: 0.6rem 1.6rem;
+		width: fit-content;
+		max-width: 100%;
 		list-style: none;
 		margin: 1.75rem 0 0;
-		padding: 0;
-		font-size: 0.92rem;
+		padding: 1.15rem 0 0;
+		border-top: 1px solid var(--line);
+		font-size: 0.9rem;
 		font-weight: 600;
-		color: var(--text-muted);
+		color: var(--espresso-2);
 	}
 
 	.trust li {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.4rem;
+		gap: 0.5rem;
 	}
 
-	.trust :global(svg) {
+	.tick {
+		display: grid;
+		place-items: center;
+		width: 22px;
+		height: 22px;
+		border-radius: 50%;
+		background: rgb(255 255 255 / 0.8);
+		box-shadow: inset 0 0 0 1px rgb(47 95 130 / 0.18);
 		color: var(--chambray-ink);
 	}
 
 	.hero-in {
-		animation: hero-in 1s var(--ease-out) both;
+		animation: hero-in 1.1s var(--ease-out) both;
 		animation-delay: var(--d);
 	}
 
 	@keyframes hero-in {
 		from {
 			opacity: 0;
-			transform: translateY(22px);
+			transform: translateY(18px);
 		}
 	}
 
+	/* The scene sits below the copy (never behind it) and fades in from the sky at the top,
+	   so the plane climbs out softly instead of being cut off at an edge. */
 	.scene-wrap {
 		position: relative;
 		flex: 1;
-		min-height: clamp(260px, 42vh, 520px);
-		margin-top: clamp(-9rem, -10vw, -2rem);
+		min-height: clamp(230px, 34vh, 420px);
+		margin-top: clamp(0.5rem, 2vh, 1.5rem);
 		z-index: -1;
 		pointer-events: none;
+		-webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+		mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
 	}
 
 	.scene-wrap :global(svg) {
@@ -703,15 +732,16 @@
 		}
 
 		.sun {
-			top: 7%;
-			right: -6%;
-			width: 120px;
-			opacity: 0.75;
+			top: auto;
+			bottom: 70px;
+			right: -50px;
+			width: 210px;
+			opacity: 0.85;
 		}
 
 		.scene-wrap {
-			min-height: 300px;
-			margin-top: -1.5rem;
+			min-height: 240px;
+			margin-top: 0.5rem;
 		}
 
 		.feature-grid {
@@ -720,6 +750,10 @@
 
 		.hero .btn-row .btn {
 			flex: 1 1 100%;
+		}
+
+		.how-link {
+			margin: 0.35rem auto 0;
 		}
 	}
 </style>
