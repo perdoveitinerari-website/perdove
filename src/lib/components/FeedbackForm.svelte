@@ -88,8 +88,9 @@
 				body: JSON.stringify({
 					tipo: 'Feedback',
 					nome: values.nome.trim(),
-					email: values.email.trim() || 'Non indicata',
-					...(values.email.trim() && { _replyto: values.email.trim() }),
+					// Formspree rejects the whole submission (422) if `email` is not a valid address,
+					// so the optional e-mail is only sent when the visitor typed one.
+					...(values.email.trim() && { email: values.email.trim(), _replyto: values.email.trim() }),
 					_subject: `[PerDove] Feedback ${'★'.repeat(values.voto)}${'☆'.repeat(5 - values.voto)} · ${itinerario}`,
 					itinerario,
 					voto: `${values.voto}/5 (${MOODS[values.voto]})`,
