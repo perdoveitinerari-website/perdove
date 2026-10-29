@@ -286,6 +286,236 @@ select {
 	align-items: center;
 }
 
+/* ---------- Forms (shared by the contact and feedback forms) ---------- */
+.form {
+	display: grid;
+	gap: 1.25rem;
+}
+
+.form .row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.25rem;
+}
+
+.form .field {
+	display: grid;
+	gap: 0.4rem;
+}
+
+.form label {
+	font-weight: 700;
+	font-size: 0.95rem;
+}
+
+.form .optional {
+	font-weight: 500;
+	color: var(--text-muted);
+}
+
+.form input[type='text'],
+.form input[type='email'],
+.form textarea,
+.form select {
+	width: 100%;
+	min-height: 52px;
+	padding: 0.8rem 1rem;
+	border: 1.5px solid rgb(58 33 25 / 0.2);
+	border-radius: 14px;
+	background: var(--surface);
+	transition:
+		border-color 0.2s,
+		box-shadow 0.2s;
+}
+
+.form textarea {
+	resize: vertical;
+	min-height: 150px;
+}
+
+.form input:hover,
+.form textarea:hover,
+.form select:hover {
+	border-color: var(--clay);
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+	outline: none;
+	border-color: var(--chambray-ink);
+	box-shadow: 0 0 0 4px rgb(121 163 195 / 0.3);
+}
+
+.form .invalid input,
+.form .invalid textarea {
+	border-color: #b4441d;
+}
+
+.form .select {
+	position: relative;
+}
+
+.form .select select {
+	appearance: none;
+	padding-right: 2.75rem;
+	cursor: pointer;
+}
+
+.form .select::after {
+	content: '';
+	position: absolute;
+	right: 1.1rem;
+	top: 50%;
+	width: 9px;
+	height: 9px;
+	border-right: 2px solid var(--espresso);
+	border-bottom: 2px solid var(--espresso);
+	transform: translateY(-70%) rotate(45deg);
+	pointer-events: none;
+}
+
+.form .err {
+	display: flex;
+	gap: 0.4rem;
+	margin: 0;
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: #a33a16;
+}
+
+.form .field-foot {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.form .count {
+	margin-left: auto;
+	font-size: 0.82rem;
+	color: var(--text-muted);
+}
+
+/* Honeypot: hidden from people, irresistible to bots. */
+.form .hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.form .check label {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.form .check input {
+	position: absolute;
+	opacity: 0;
+	width: 24px;
+	height: 24px;
+	margin: 0;
+}
+
+.form .box {
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 24px;
+	height: 24px;
+	border: 1.5px solid rgb(58 33 25 / 0.35);
+	border-radius: 7px;
+	background: var(--surface);
+	color: transparent;
+	transition:
+		background-color 0.2s,
+		border-color 0.2s,
+		color 0.2s;
+}
+
+.form .check input:checked + .box {
+	background: var(--espresso);
+	border-color: var(--espresso);
+	color: #fff;
+}
+
+.form .check input:focus-visible + .box {
+	outline: 3px solid var(--chambray);
+	outline-offset: 2px;
+}
+
+.form .invalid .box {
+	border-color: #b4441d;
+}
+
+.form .submit-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem 1.5rem;
+}
+
+.form .submit-row .note {
+	margin: 0;
+	font-size: 0.88rem;
+	color: var(--text-muted);
+}
+
+.form .btn[disabled] {
+	opacity: 0.75;
+	cursor: progress;
+	transform: none;
+}
+
+.form .spinner {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	border: 2.5px solid rgb(255 255 255 / 0.35);
+	border-top-color: #fff;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.form .form-error {
+	display: flex;
+	gap: 0.75rem;
+	align-items: flex-start;
+	padding: 1rem 1.25rem;
+	border-radius: var(--radius-l);
+	background: #fbe6dc;
+	color: #7a2e12;
+}
+
+.form .form-error:focus {
+	outline: none;
+}
+
+.form .form-error p {
+	margin: 0;
+}
+
+.form .form-error svg {
+	flex: none;
+	margin-top: 0.15rem;
+}
+
+@media (max-width: 640px) {
+	.form .row {
+		grid-template-columns: 1fr;
+	}
+}
+
 /* ---------- Reveal on scroll (driven by the `reveal` action) ---------- */
 .js .reveal {
 	opacity: 0;
@@ -317,8 +547,10 @@ select {
 	*::before,
 	*::after {
 		animation-duration: 0.01ms !important;
+		animation-delay: 0s !important;
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
+		transition-delay: 0s !important;
 	}
 
 	.reveal {

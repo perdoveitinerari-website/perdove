@@ -34,6 +34,7 @@
 				<ul>
 					<li><a href="/faq">Domande frequenti</a></li>
 					<li><a href="/contatti">Contatti</a></li>
+					<li><a href="/feedback">Lascia un feedback</a></li>
 					<li><a href="/privacy">Privacy Policy</a></li>
 					<li><a href="/termini">Termini e condizioni</a></li>
 				</ul>

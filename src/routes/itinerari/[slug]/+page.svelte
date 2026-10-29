@@ -7,6 +7,7 @@
 	import { imageSet } from '#lib/images.ts';
 	import { site } from '#lib/config.ts';
 	import { itineraries, daysLabel, regionLabel } from '#lib/data/itineraries.ts';
+	import { trackAttrs, EVENTS } from '#lib/analytics.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -168,6 +169,21 @@
 		</div>
 	</section>
 {/if}
+
+<!-- FEEDBACK PROMPT -->
+<aside class="container fb-prompt" aria-label="Lascia un feedback" {@attach reveal()}>
+	<span class="fb-stars" aria-hidden="true">
+		{#each [1, 2, 3, 4, 5] as n (n)}<span style:--i={n}><Icon name="star" size={20} /></span>{/each}
+	</span>
+	<p>Hai usato l’itinerario <strong>{it.title}</strong>? Raccontaci com’è andata.</p>
+	<a
+		class="link-arrow"
+		href={`/feedback?itinerario=${it.slug}#modulo`}
+		{...trackAttrs(EVENTS.cta, { posizione: 'itinerario-feedback', itinerario: it.slug })}
+	>
+		Lascia un feedback <Icon name="arrow" />
+	</a>
+</aside>
 
 <div class="sticky-bar" class:show={showBar} aria-hidden={!showBar} inert={!showBar}>
 	<PdfActions itinerary={it} position="barra-mobile" compact />
@@ -431,6 +447,44 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
+	}
+
+	/* ---------- Feedback prompt ---------- */
+	.fb-prompt {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem 1.25rem;
+		padding: 1.25rem 1.5rem;
+		border: 1.5px dashed var(--bisque);
+		border-radius: var(--radius-l);
+		text-align: center;
+	}
+
+	.fb-prompt p {
+		margin: 0;
+	}
+
+	.fb-stars {
+		display: flex;
+		gap: 0.15rem;
+	}
+
+	.fb-stars span {
+		display: block;
+		color: var(--bisque);
+		transition:
+			color 0.25s,
+			transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+		transition-delay: calc(var(--i) * 50ms);
+	}
+
+	/* Hovering the prompt fills the stars one by one, like a rating in progress. */
+	.fb-prompt:hover .fb-stars span,
+	.fb-prompt:focus-within .fb-stars span {
+		color: var(--terracotta);
+		transform: translateY(-3px) scale(1.12);
 	}
 
 	/* ---------- Mobile sticky CTA ---------- */

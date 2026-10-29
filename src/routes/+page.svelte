@@ -186,6 +186,25 @@
 	</div>
 </section>
 
+<!-- FEEDBACK -->
+<section class="feedback-cta" aria-labelledby="feedback-title">
+	<div class="container">
+		<a class="feedback-card" href="/feedback" {...trackAttrs(EVENTS.cta, { posizione: 'home-feedback' })} {@attach reveal()}>
+			<div>
+				<p class="eyebrow">La tua opinione conta</p>
+				<h2 id="feedback-title">Hai viaggiato con un itinerario PerDove?</h2>
+				<p>Raccontaci com’è andata: bastano un voto e due righe per aiutarci a migliorare i prossimi viaggi.</p>
+				<span class="btn btn-outline">Lascia un feedback <Icon name="arrow" /></span>
+			</div>
+			<span class="deco-stars" aria-hidden="true">
+				{#each [1, 2, 3, 4, 5] as n (n)}
+					<span style:--i={n}><Icon name="star" size={34} /></span>
+				{/each}
+			</span>
+		</a>
+	</div>
+</section>
+
 <!-- FINAL CTA -->
 <section class="final" aria-labelledby="final-title">
 	<div class="container">
@@ -515,6 +534,78 @@
 		color: var(--text-muted);
 	}
 
+	/* ---------- Feedback CTA ---------- */
+	.feedback-cta {
+		padding-bottom: clamp(3rem, 7vw, 5rem);
+	}
+
+	.feedback-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem 3rem;
+		padding: clamp(1.75rem, 5vw, 3rem) clamp(1.5rem, 5vw, 3.5rem);
+		border-radius: clamp(28px, 4vw, 44px);
+		background: var(--bisque-soft);
+		color: var(--espresso);
+		text-decoration: none;
+	}
+
+	.feedback-card h2 {
+		font-size: var(--step-2);
+		max-width: 22ch;
+	}
+
+	.feedback-card p:not(.eyebrow) {
+		max-width: 52ch;
+		color: var(--text-muted);
+		margin-bottom: 1.5rem;
+	}
+
+	/* The whole card is the link, so the button only mirrors the hover state. */
+	.feedback-card:hover .btn-outline {
+		--btn-bg: var(--espresso);
+		--btn-fg: #fff;
+		transform: translateY(-2px);
+		box-shadow: 0 10px 24px -10px rgb(58 33 25 / 0.55);
+	}
+
+	.deco-stars {
+		display: flex;
+		flex: none;
+		gap: 0.3rem;
+		padding: 1rem 1.25rem;
+		border-radius: 999px;
+		background: var(--surface);
+		box-shadow: var(--shadow-s);
+		transform: rotate(-4deg);
+	}
+
+	.deco-stars span {
+		display: block;
+		color: var(--terracotta);
+		transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+		transition-delay: calc(var(--i) * 40ms);
+	}
+
+	/* Stars light up one by one when the card scrolls into view... */
+	:global(.is-visible) .deco-stars span {
+		animation: star-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+		animation-delay: calc(0.35s + var(--i) * 90ms);
+	}
+
+	/* ...and do a little wave when the card is hovered. */
+	.feedback-card:hover .deco-stars span {
+		transform: translateY(-7px) rotate(-10deg);
+	}
+
+	@keyframes star-in {
+		from {
+			opacity: 0;
+			transform: scale(0.2) rotate(-120deg);
+		}
+	}
+
 	/* ---------- Final CTA ---------- */
 	.final-card {
 		position: relative;
@@ -578,6 +669,11 @@
 
 		.welcome-media {
 			max-width: 560px;
+		}
+
+		.feedback-card {
+			flex-direction: column-reverse;
+			align-items: flex-start;
 		}
 	}
 

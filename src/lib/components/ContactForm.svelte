@@ -125,7 +125,7 @@
 {:else}
 	<form bind:this={form} class="form" novalidate {onsubmit} aria-describedby="form-note">
 		{#if status === 'error'}
-			<div class="result error" role="alert" tabindex="-1" bind:this={resultBox}>
+			<div class="form-error" role="alert" tabindex="-1" bind:this={resultBox}>
 				<Icon name="alert" size={22} />
 				<p>
 					{errorMessage} In alternativa scrivici direttamente a
@@ -237,226 +237,17 @@
 {/if}
 
 <style>
-	.form {
-		display: grid;
-		gap: 1.25rem;
-	}
-
-	.row {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 1.25rem;
-	}
-
-	.field {
-		display: grid;
-		gap: 0.4rem;
-	}
-
-	label {
-		font-weight: 700;
-		font-size: 0.95rem;
-	}
-
-	input[type='text'],
-	input[type='email'],
-	textarea,
-	select {
-		width: 100%;
-		min-height: 52px;
-		padding: 0.8rem 1rem;
-		border: 1.5px solid rgb(58 33 25 / 0.2);
-		border-radius: 14px;
-		background: var(--surface);
-		transition:
-			border-color 0.2s,
-			box-shadow 0.2s;
-	}
-
-	textarea {
-		resize: vertical;
-		min-height: 150px;
-	}
-
-	input:hover,
-	textarea:hover,
-	select:hover {
-		border-color: var(--clay);
-	}
-
-	input:focus,
-	textarea:focus,
-	select:focus {
-		outline: none;
-		border-color: var(--chambray-ink);
-		box-shadow: 0 0 0 4px rgb(121 163 195 / 0.3);
-	}
-
-	.invalid input,
-	.invalid textarea {
-		border-color: #b4441d;
-	}
-
-	.select {
-		position: relative;
-	}
-
-	.select select {
-		appearance: none;
-		padding-right: 2.75rem;
-		cursor: pointer;
-	}
-
-	.select::after {
-		content: '';
-		position: absolute;
-		right: 1.1rem;
-		top: 50%;
-		width: 9px;
-		height: 9px;
-		border-right: 2px solid var(--espresso);
-		border-bottom: 2px solid var(--espresso);
-		transform: translateY(-70%) rotate(45deg);
-		pointer-events: none;
-	}
-
-	.err {
-		display: flex;
-		gap: 0.4rem;
-		margin: 0;
-		font-size: 0.88rem;
-		font-weight: 600;
-		color: #a33a16;
-	}
-
-	.field-foot {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-	}
-
-	.count {
-		margin-left: auto;
-		font-size: 0.82rem;
-		color: var(--text-muted);
-	}
-
-	.hp {
-		position: absolute;
-		left: -9999px;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-	}
-
-	.check label {
-		position: relative;
-		display: flex;
-		align-items: flex-start;
-		gap: 0.75rem;
-		font-weight: 500;
-		cursor: pointer;
-	}
-
-	.check input {
-		position: absolute;
-		opacity: 0;
-		width: 24px;
-		height: 24px;
-		margin: 0;
-	}
-
-	.box {
-		display: grid;
-		place-items: center;
-		flex: none;
-		width: 24px;
-		height: 24px;
-		border: 1.5px solid rgb(58 33 25 / 0.35);
-		border-radius: 7px;
-		background: var(--surface);
-		color: transparent;
-		transition:
-			background-color 0.2s,
-			border-color 0.2s,
-			color 0.2s;
-	}
-
-	.check input:checked + .box {
-		background: var(--espresso);
-		border-color: var(--espresso);
-		color: #fff;
-	}
-
-	.check input:focus-visible + .box {
-		outline: 3px solid var(--chambray);
-		outline-offset: 2px;
-	}
-
-	.invalid .box {
-		border-color: #b4441d;
-	}
-
-	.submit-row {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 1rem 1.5rem;
-	}
-
-	.submit-row .note {
-		margin: 0;
-		font-size: 0.88rem;
-		color: var(--text-muted);
-	}
-
-	.btn[disabled] {
-		opacity: 0.75;
-		cursor: progress;
-		transform: none;
-	}
-
-	.spinner {
-		width: 18px;
-		height: 18px;
-		border-radius: 50%;
-		border: 2.5px solid rgb(255 255 255 / 0.35);
-		border-top-color: #fff;
-		animation: spin 0.8s linear infinite;
-	}
-
-	@keyframes spin {
-		to {
-			transform: rotate(360deg);
-		}
-	}
-
-	.result {
-		border-radius: var(--radius-l);
-	}
-
-	.result:focus {
-		outline: none;
-	}
-
-	.result.error {
-		display: flex;
-		gap: 0.75rem;
-		align-items: flex-start;
-		padding: 1rem 1.25rem;
-		background: #fbe6dc;
-		color: #7a2e12;
-	}
-
-	.result.error p {
-		margin: 0;
-	}
-
+	/* Field styles are shared with the feedback form: see "Forms" in app.css. */
 	.result.success {
 		padding: clamp(2rem, 5vw, 3rem);
 		text-align: center;
+		border-radius: var(--radius-l);
 		background: var(--glacier-soft);
 		animation: pop 0.6s var(--ease-out) both;
+	}
+
+	.result.success:focus {
+		outline: none;
 	}
 
 	.result.success .btn-row {
@@ -478,12 +269,6 @@
 		from {
 			opacity: 0;
 			transform: scale(0.96);
-		}
-	}
-
-	@media (max-width: 640px) {
-		.row {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>

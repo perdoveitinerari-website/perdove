@@ -9,6 +9,7 @@
 		{ href: '/itinerari', label: 'Itinerari' },
 		{ href: '/#come-funziona', label: 'Come funziona' },
 		{ href: '/faq', label: 'FAQ' },
+		{ href: '/feedback', label: 'Feedback' },
 		{ href: '/contatti', label: 'Contatti' }
 	];
 
@@ -175,6 +176,7 @@
 		text-decoration: none;
 		font-weight: 600;
 		font-size: 0.96rem;
+		white-space: nowrap;
 	}
 
 	.nav a::after {
@@ -200,6 +202,7 @@
 		min-height: 42px;
 		padding-inline: 1.15em;
 		font-size: 0.92rem;
+		white-space: nowrap;
 	}
 
 	.toggle {
@@ -304,6 +307,22 @@
 	@media (min-width: 901px) {
 		.drawer {
 			display: none;
+		}
+	}
+
+	/* Just above the mobile breakpoint, tighten the bar so all links fit on one line. */
+	@media (max-width: 1100px) {
+		.bar {
+			gap: 0.75rem;
+		}
+
+		.nav a {
+			padding-inline: 0.6rem;
+		}
+
+		.nav a::after {
+			left: 0.6rem;
+			right: 0.6rem;
 		}
 	}
 

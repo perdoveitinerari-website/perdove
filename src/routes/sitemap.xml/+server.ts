@@ -11,6 +11,7 @@ const pages: { path: string; priority: string; changefreq: string }[] = [
 	...itineraries.map((it) => ({ path: `/itinerari/${it.slug}`, priority: '0.8', changefreq: 'monthly' })),
 	{ path: '/faq', priority: '0.5', changefreq: 'monthly' },
 	{ path: '/contatti', priority: '0.5', changefreq: 'yearly' },
+	{ path: '/feedback', priority: '0.4', changefreq: 'yearly' },
 	{ path: '/privacy', priority: '0.2', changefreq: 'yearly' },
 	{ path: '/termini', priority: '0.2', changefreq: 'yearly' }
 ];

@@ -18,7 +18,8 @@ export const EVENTS = {
 	filter: 'filtro-regione',
 	social: 'social',
 	cta: 'cta',
-	contactSent: 'contatto-inviato'
+	contactSent: 'contatto-inviato',
+	feedbackSent: 'feedback-inviato'
 } as const;
 
 export function track(event: string, data?: EventData): void {
